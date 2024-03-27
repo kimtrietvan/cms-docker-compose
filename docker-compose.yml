@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  nginx:
+    container_name: nginx
+    build: 
+      context: .
+      dockerfile: nginx-dockerfile
+    command: nginx -g "daemon off;"
+    links:
+      - php
+    ports:
+      - "8081:80"
+    # volumes:
+    #   - src:/var/www/html
+  php:
+    container_name: php
+    links:
+      - database
+    build: 
+      context: .
+      dockerfile: php-dockerfile
+    # volumes:
+    #   - src:/var/www/html
+  database:
+    container_name: database
+    image: mariadb:lts
+    environment:
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=1
+      - MARIADB_DATABASE=u336944968_cms
+      - MARIADB_USER=u336944968_cms
+      - MARIADB_PASSWORD=Quangnam92f1@
+  
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: myadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - UPLOAD_LIMIT=2G
+    ports:
+      - 8000:80
+volumes:
+  src:

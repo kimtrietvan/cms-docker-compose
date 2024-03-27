@@ -1,0 +1,24 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb:10.6.17
+    container_name: database
+    ports:
+      - 3306:3306
+    environment:
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=1
+      - MARIADB_DATABASE=u336944968_cms
+      - MARIADB_USER=u336944968_cms
+      - MARIADB_PASSWORD=Quangnam92f1@
+    volumes:
+      - data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin:5.2.1
+    container_name: phpmyadmin
+    ports:
+      - 8000:80
+    environment:
+      - PMA_ARBITRARY=1
+      - UPLOAD_LIMIT=2G
+volumes:
+  data:
